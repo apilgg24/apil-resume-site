@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react"
+import { createPortal } from "react-dom"
 import { siteData } from "../data/siteData"
 import { useReveal } from "../hooks/useReveal"
 import type { ProjectItem } from "../types/site"
@@ -34,6 +36,7 @@ export default function ProjectsSection() {
 function ProjectCard({ project, index }: { project: ProjectItem; index: number }) {
   const ref = useReveal<HTMLDivElement>()
   const hasLiveLink = project.link && project.link !== "#"
+  const hasActions = hasLiveLink || project.github
   const reverse = index % 2 === 1
 
   return (
@@ -81,8 +84,9 @@ function ProjectCard({ project, index }: { project: ProjectItem; index: number }
             </div>
           </div>
 
+          {hasActions && (
           <div className="flex flex-wrap gap-3">
-            {hasLiveLink ? (
+            {hasLiveLink && (
               <a
                 href={project.link}
                 target="_blank"
@@ -105,10 +109,6 @@ function ProjectCard({ project, index }: { project: ProjectItem; index: number }
                   <path d="M7 7h10v10" />
                 </svg>
               </a>
-            ) : (
-              <span className="inline-flex items-center gap-2 rounded-lg border border-marine-border bg-marine-bg-alt/60 px-5 py-2 text-sm font-medium text-marine-muted">
-                In progress
-              </span>
             )}
 
             {project.github && (
@@ -126,11 +126,17 @@ function ProjectCard({ project, index }: { project: ProjectItem; index: number }
               </a>
             )}
           </div>
+          )}
         </div>
 
         {/* Preview */}
         <div className="relative min-h-56 overflow-hidden md:min-h-0 md:w-1/2">
-          {project.screenshot ? (
+          {project.screenshots && project.screenshots.length > 0 ? (
+            <ScreenshotCarousel
+              images={project.screenshots}
+              name={project.name}
+            />
+          ) : project.screenshot ? (
             <img
               src={project.screenshot}
               alt={`${project.name} preview`}
@@ -142,6 +148,239 @@ function ProjectCard({ project, index }: { project: ProjectItem; index: number }
         </div>
       </div>
     </div>
+  )
+}
+
+function ScreenshotCarousel({
+  images,
+  name,
+}: {
+  images: string[]
+  name: string
+}) {
+  const [idx, setIdx] = useState(0)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const total = images.length
+  const go = (delta: number) => setIdx((i) => (i + delta + total) % total)
+
+  return (
+    <div className="relative flex h-full min-h-56 w-full items-center justify-center bg-marine-bg-alt/40 p-4 md:p-6">
+      <button
+        type="button"
+        onClick={() => setLightboxOpen(true)}
+        aria-label={`Open ${name} screenshot ${idx + 1} in full size`}
+        className="group/zoom relative block w-full overflow-hidden rounded-xl border border-marine-border bg-marine-surface shadow-md transition-shadow hover:shadow-lg"
+      >
+        <img
+          src={images[idx]}
+          alt={`${name} screenshot ${idx + 1} of ${total}`}
+          className="block h-auto max-h-[420px] w-full object-contain transition-transform duration-300 group-hover/zoom:scale-[1.01]"
+        />
+        <span className="pointer-events-none absolute right-2 top-2 inline-flex items-center gap-1 rounded-full bg-marine-primary/85 px-2 py-0.5 text-[10px] font-medium text-white opacity-0 shadow-sm backdrop-blur transition-opacity group-hover/zoom:opacity-100">
+          <svg
+            aria-hidden
+            width="10"
+            height="10"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="11" cy="11" r="7" />
+            <path d="M21 21l-4.3-4.3" />
+            <path d="M11 8v6" />
+            <path d="M8 11h6" />
+          </svg>
+          Click to enlarge
+        </span>
+      </button>
+
+      <button
+        type="button"
+        aria-label="Previous screenshot"
+        onClick={() => go(-1)}
+        className="absolute left-3 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full border border-marine-border bg-marine-surface/90 text-marine-primary shadow-sm backdrop-blur transition-all hover:bg-marine-surface hover:shadow-md"
+      >
+        <svg
+          aria-hidden
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+      </button>
+
+      <button
+        type="button"
+        aria-label="Next screenshot"
+        onClick={() => go(1)}
+        className="absolute right-3 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full border border-marine-border bg-marine-surface/90 text-marine-primary shadow-sm backdrop-blur transition-all hover:bg-marine-surface hover:shadow-md"
+      >
+        <svg
+          aria-hidden
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+      </button>
+
+      <span className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full border border-marine-border bg-marine-surface/90 px-2.5 py-0.5 text-[10px] font-medium text-marine-muted shadow-sm backdrop-blur">
+        {idx + 1} / {total}
+      </span>
+
+      {lightboxOpen && (
+        <Lightbox
+          images={images}
+          name={name}
+          index={idx}
+          onIndexChange={setIdx}
+          onClose={() => setLightboxOpen(false)}
+        />
+      )}
+    </div>
+  )
+}
+
+function Lightbox({
+  images,
+  name,
+  index,
+  onIndexChange,
+  onClose,
+}: {
+  images: string[]
+  name: string
+  index: number
+  onIndexChange: (i: number) => void
+  onClose: () => void
+}) {
+  const total = images.length
+  const go = (delta: number) =>
+    onIndexChange((index + delta + total) % total)
+
+  useEffect(() => {
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+    return () => {
+      document.body.style.overflow = prevOverflow
+    }
+  }, [])
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose()
+      else if (e.key === "ArrowLeft") go(-1)
+      else if (e.key === "ArrowRight") go(1)
+    }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [index, total, onClose, onIndexChange])
+
+  return createPortal(
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${name} screenshot viewer`}
+      onClick={onClose}
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm sm:p-8"
+    >
+      <button
+        type="button"
+        aria-label="Close"
+        onClick={onClose}
+        className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white ring-1 ring-white/30 backdrop-blur transition-colors hover:bg-white/20"
+      >
+        <svg
+          aria-hidden
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M18 6L6 18" />
+          <path d="M6 6l12 12" />
+        </svg>
+      </button>
+
+      <button
+        type="button"
+        aria-label="Previous screenshot"
+        onClick={(e) => {
+          e.stopPropagation()
+          go(-1)
+        }}
+        className="absolute left-2 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white ring-1 ring-white/30 backdrop-blur transition-colors hover:bg-white/20 sm:left-6"
+      >
+        <svg
+          aria-hidden
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+      </button>
+
+      <button
+        type="button"
+        aria-label="Next screenshot"
+        onClick={(e) => {
+          e.stopPropagation()
+          go(1)
+        }}
+        className="absolute right-2 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white ring-1 ring-white/30 backdrop-blur transition-colors hover:bg-white/20 sm:right-6"
+      >
+        <svg
+          aria-hidden
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+      </button>
+
+      <img
+        src={images[index]}
+        alt={`${name} screenshot ${index + 1} of ${total}`}
+        onClick={(e) => e.stopPropagation()}
+        className="max-h-[90vh] max-w-[92vw] rounded-lg object-contain shadow-2xl"
+      />
+
+      <span className="absolute bottom-5 left-1/2 -translate-x-1/2 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white ring-1 ring-white/30 backdrop-blur">
+        {index + 1} / {total}
+      </span>
+    </div>,
+    document.body,
   )
 }
 

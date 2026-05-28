@@ -2,8 +2,10 @@ import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
 import HeroSection from "./sections/HeroSection"
 import ExperienceSection from "./sections/ExperienceSection"
+import EducationSection from "./sections/EducationSection"
 import ProjectsSection from "./sections/ProjectsSection"
 import SkillsSection from "./sections/SkillsSection"
+import CertificationsSection from "./sections/CertificationsSection"
 import ContactSection from "./sections/ContactSection"
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
         <ExperienceSection />
         <ProjectsSection />
         <SkillsSection />
+        <CertificationsSection />
+        <EducationSection />
         <ContactSection />
       </main>
       <Footer />

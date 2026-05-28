@@ -126,6 +126,33 @@ function TimelineItem({
             ))}
           </div>
         )}
+
+        {item.featuredIn && (
+          <div className="mt-4">
+            <a
+              href={item.featuredIn.url}
+              target="_blank"
+              rel="noreferrer"
+              className="group/featured inline-flex items-center gap-1.5 rounded-full bg-linear-to-r from-marine-primary to-marine-primary-dark px-3.5 py-1.5 text-xs font-semibold text-white shadow-sm ring-1 ring-marine-primary/20 transition-all hover:shadow-md hover:ring-marine-primary/40"
+            >
+              <span className="inline-flex h-1.5 w-1.5 rounded-full bg-marine-accent shadow-[0_0_0_3px_rgba(255,255,255,0.15)]" />
+              <span>{item.featuredIn.label}</span>
+              <svg
+                aria-hidden
+                className="h-3 w-3 transition-transform group-hover/featured:-translate-y-0.5 group-hover/featured:translate-x-0.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M7 17L17 7" />
+                <path d="M7 7h10v10" />
+              </svg>
+            </a>
+          </div>
+        )}
       </div>
     </li>
   )

@@ -37,19 +37,76 @@ export const siteData: SiteData = {
       role: "Angular Frontend Developer",
       period: "Feb 2025 – Apr 2026",
       highlights: [
-        "Develop enterprise UI features using Angular",
-        "Implement REST API integrations",
-        "Collaborate with product and backend teams",
+        "Led frontend development for a two-way SMS messaging feature in an enterprise Angular ERP/CRM platform",
+        "Built and maintained ~90% of the UI including Angular components, services, and state management using TypeScript (strict mode)",
+        "Integrated REST APIs and managed async data flows using BehaviorSubject-based facades for predictable application state",
+        "Built responsive interfaces with Tailwind CSS and enterprise component libraries (Syncfusion, PrimeNG)",
+        "Collaborated with backend developers, QA engineers, designers, and PMs through development, testing, and release cycles",
+        "Fixed production bugs and supported deployments across multiple environments",
       ],
-      tech: ["Angular", "TypeScript", "RxJS", "REST APIs"],
+      tech: ["Angular", "TypeScript", "RxJS", "REST APIs", "Tailwind CSS", "Syncfusion", "PrimeNG"],
+    },
+    {
+      company: "Ghamchhaya Consultancy Pvt. Ltd.",
+      role: "Co-Founder & Research Analyst",
+      period: "Aug 2021 – Dec 2025",
+      highlights: [
+        "Co-founded and managed a consultancy focused on community development projects",
+        "Conducted focus group discussions, surveys, and quantitative data analysis to evaluate project outcomes",
+      ],
+      tech: ["Research", "Data Analysis", "Project Management"],
+      featuredIn: {
+        label: "Featured in ENERGIA",
+        url: "https://energia.org/tackling-climate-change-and-upskilling-women-through-innovation-in-clean-energy/",
+      },
+    },
+  ],
+
+  education: [
+    {
+      school: "Sichuan University",
+      degree: "Master of Law, International Relations",
+      period: "2018 – 2021",
+    },
+    {
+      school: "North Carolina Wesleyan University",
+      degree: "BS Mathematics",
+      period: "2011 – 2016",
     },
   ],
 
   projects: [
     {
+      name: "Two-Way SMS Messaging Platform",
+      description:
+        "Built the frontend for a full two-way SMS messaging feature inside an enterprise Angular ERP/CRM platform used by restoration contractors. This included a real-time messaging inbox, SMS template management, scheduled texts, auto-reply configuration with office hours, and a customer info sidebar — all integrated into the existing job and CRM workflow.",
+      tech: [
+        "Angular",
+        "TypeScript",
+        "RxJS",
+        "Tailwind CSS",
+        "Syncfusion",
+        "PrimeNG",
+        "REST APIs",
+      ],
+      screenshots: [
+        "/images/sani-1.png",
+        "/images/sani-2.png",
+        "/images/sani-3.png",
+        "/images/sani-4.png",
+        "/images/sani-5.png",
+        "/images/sani-6.png",
+        "/images/sani-7.png",
+        "/images/sani-8.png",
+        "/images/sani-9.png",
+      ],
+      category: "Frontend",
+      featured: true,
+    },
+    {
       name: "Mala Plants",
       description:
-        "A full-stack plant e-commerce platform with authentication, product listings, and image storage. Deployed on Vercel.",
+        "An Angular + Supabase marketplace for local plant growers in Kathmandu to list and sell homegrown plants. Features include Google and phone OTP auth, product catalog, cart and checkout, seller dashboard with photo uploads, multi-vendor org tenancy, and RLS-enforced data security.",
       tech: ["Angular 21", "TypeScript 5.9", "Supabase", "Tailwind CSS 4.2"],
       link: "https://mala-plants.vercel.app",
       screenshot: "/images/mala-plants-preview.png",
@@ -60,7 +117,7 @@ export const siteData: SiteData = {
     {
       name: "RapidPhotoFlow",
       description:
-        "A full-stack workflow concept for AI-assisted image prompt and processing flows.",
+        "A full-stack demo app simulating a field-service photo intake workflow. Users batch-upload photos that move through a processing pipeline (Uploaded → Processing → Done) with a live status queue, gallery view, and event log — built to showcase an end-to-end upload, process, and review UX.",
       tech: ["React", "Spring Boot"],
       link: "https://rapidphotoflow-frontend.onrender.com/",
       github: "https://github.com/apilgg24/rapidphotoflow",

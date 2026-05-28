@@ -5,18 +5,27 @@ export type ExperienceItem = {
   highlights: string[]
   tech?: string[]
   location?: string
+  featuredIn?: { label: string; url: string }
 }
 
 export type ProjectItem = {
   name: string
   description: string
   tech: string[]
-  link: string
+  link?: string
   github?: string
   screenshot?: string
+  screenshots?: string[]
   category?: string
   featured?: boolean
   theme?: "default" | "plants"
+}
+
+export type EducationItem = {
+  school: string
+  degree: string
+  period: string
+  location?: string
 }
 
 export type SiteData = {
@@ -39,6 +48,7 @@ export type SiteData = {
     tools: string[]
   }
   experience: ExperienceItem[]
+  education: EducationItem[]
   projects: ProjectItem[]
   certifications?: Certification[]
 }
