@@ -3,9 +3,9 @@ import type { SiteData } from "../types/site"
 export const siteData: SiteData = {
   profile: {
     name: "Apil Gurung",
-    headline: "Software Developer",
+    headline: "Developer & Product Thinker",
     summary:
-      "Software developer specializing in Angular, React, TypeScript, and enterprise web applications. Experienced building scalable UI features and integrating APIs.",
+      "Developer with an uncommon background in law, research, journalism, and teaching who builds products with critical thinking and clear communication baked in. Currently focused on Angular, React, and TypeScript with hands-on experience shipping real features in enterprise SaaS.",
   },
 
   links: {
@@ -70,7 +70,7 @@ export const siteData: SiteData = {
     },
     {
       school: "North Carolina Wesleyan University",
-      degree: "BS Mathematics",
+      degree: "Bachelor of Science, Mathematics",
       period: "2011 – 2016",
     },
   ],
