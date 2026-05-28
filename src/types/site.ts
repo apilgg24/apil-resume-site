@@ -40,4 +40,12 @@ export type SiteData = {
   }
   experience: ExperienceItem[]
   projects: ProjectItem[]
+  certifications?: Certification[]
+}
+
+export type Certification = {
+  title: string
+  issued: string
+  validUntil?: string
+  link?: string
 }

@@ -17,10 +17,19 @@ export const siteData: SiteData = {
   },
 
   skills: {
-    frontend: ["Angular", "React", "TypeScript", "RxJS", "Tailwind"],
-    backend: ["Java", "Spring Boot"],
-    tools: ["Git", "Figma", "REST APIs"],
+    frontend: ["Angular", "React", "TypeScript", "RxJS", "Tailwind", "HTML/CSS", "Vite"],
+    backend: ["Java", "Spring Boot", "Supabase", "SQL"],
+    tools: ["Git", "Figma", "REST APIs", "Docker", "Vercel", "Render", "AWS"],
   },
+
+  certifications: [
+    {
+      title: "AWS Certified Solutions Architect – Associate",
+      issued: "October 2024",
+      validUntil: "October 2027",
+      link: "https://www.credly.com/badges/e31d3d49-6f36-4789-a06b-6738bcc5735f/linked_in_profile",
+    },
+  ],
 
   experience: [
     {
@@ -38,24 +47,25 @@ export const siteData: SiteData = {
 
   projects: [
     {
-      name: "RapidPhotoFlow",
-      description:
-        "A full-stack workflow concept for AI-assisted image prompt and processing flows.",
-      tech: ["React", "Spring Boot"],
-      link: "#",
-      category: "Full-Stack",
-      featured: true,
-      // github: "https://github.com/apilgg24/rapidphotoflow", // uncomment when repo is public
-    },
-    {
       name: "Mala Plants",
       description:
         "A full-stack plant e-commerce platform with authentication, product listings, and image storage. Deployed on Vercel.",
       tech: ["Angular 21", "TypeScript 5.9", "Supabase", "Tailwind CSS 4.2"],
       link: "https://mala-plants.vercel.app",
-      github: "https://github.com/apilgg24/mala-plants",
+      screenshot: "/images/mala-plants-preview.png",
       category: "Full-Stack",
+      featured: true,
       theme: "plants",
+    },
+    {
+      name: "RapidPhotoFlow",
+      description:
+        "A full-stack workflow concept for AI-assisted image prompt and processing flows.",
+      tech: ["React", "Spring Boot"],
+      link: "https://rapidphotoflow-frontend.onrender.com/",
+      github: "https://github.com/apilgg24/rapidphotoflow",
+      screenshot: "/images/rapidphotoflow-preview.png",
+      category: "Full-Stack",
     },
   ],
 }

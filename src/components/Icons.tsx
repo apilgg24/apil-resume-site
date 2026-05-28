@@ -167,6 +167,26 @@ export function ServerIcon({ className, size = 20 }: IconProps) {
   )
 }
 
+export function AwardIcon({ className, size = 20 }: IconProps) {
+  return (
+    <svg
+      className={className}
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <circle cx="12" cy="8" r="6" />
+      <polyline points="8.21 13.89 7 22 12 19 17 22 15.79 13.88" />
+    </svg>
+  )
+}
+
 export function WrenchIcon({ className, size = 20 }: IconProps) {
   return (
     <svg
